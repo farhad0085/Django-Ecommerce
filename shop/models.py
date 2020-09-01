@@ -17,3 +17,12 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.id} - {self.product_name}"
 
+class ProductReview(models.Model):
+    author_name = models.CharField(max_length=260)
+    author_email = models.EmailField()
+    review_description = models.TextField()
+    review_score = models.IntegerField()
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.id} - {self.product_name}"
