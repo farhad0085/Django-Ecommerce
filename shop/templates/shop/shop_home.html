@@ -2,23 +2,19 @@
 
 {% block content %}
 
-<!-- Page Content -->
 <div class="container">
 
 	<div class="row">
 
-		<div class="col-lg-3">
-
-			<h1 class="my-4">Shop Name</h1>
+		<div class="col-lg-3 my-4">
 			<div class="list-group">
-				<a href="#" class="list-group-item">Category 1</a>
-				<a href="#" class="list-group-item">Category 2</a>
-				<a href="#" class="list-group-item">Category 3</a>
+				<h3 class="display-5">Categories</h3>
+				{% for category in categories %}
+					<a href="#" class="list-group-item list-group-item-action">{{ category.category_name }}</a>
+				{% endfor %}
 			</div>
 
 		</div>
-		<!-- /.col-lg-3 -->
-
 		<div class="col-lg-9">
 
 			<div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
@@ -53,19 +49,33 @@
 					{% for product in products %}
 					<div class="col-lg-4 col-md-6 mb-4">
 						<div class="card h-100">
-							<a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
+							<a href="#"><img class="card-img-top" src="{{ product.product_picture.url }}" alt=""></a>
 							<div class="card-body">
 								<h4 class="card-title">
-									<a href="#">{{ product.product_name }}</a>
+									<a href="{% url 'shop_item_details' product.id %}">{{ product.product_name }}</a>
 								</h4>
 								<h5>{{ product.product_price }} Taka</h5>
 								<p class="card-text">{{ product.product_description|slice:":80" }}</p>
 							</div>
 							<div class="card-footer">
-								{% for review in product.productreview_set_list %}
-									{{review}}
+								{% for product_item, review_score in product_review_dict.items %}
+									{% if product.id == product_item.id %}
+									Rating: 
+										{% if review_score == 0 or review_score < 1 %}
+											<span class="text-warning">&#9734; &#9734; &#9734; &#9734; &#9734;</span>
+										{% elif review_score == 1 or review_score < 2 %}
+											<span class="text-warning">&#9733; &#9734; &#9734; &#9734; &#9734;</span>
+										{% elif review_score == 2 or review_score < 3 %}
+											<span class="text-warning">&#9733; &#9733; &#9734; &#9734; &#9734;</span>
+										{% elif review_score == 3 or review_score < 4 %}
+											<span class="text-warning">&#9733; &#9733; &#9733; &#9734; &#9734;</span>
+										{% elif review_score == 4 or review_score < 5 %}
+											<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+										{% else %}
+											<span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
+										{% endif %}
+									{% endif %}
 								{% endfor %}
-								<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
 							</div>
 						</div>
 					</div>
@@ -73,17 +83,10 @@
 				{% else %}
 					<h3>No Product Found!</h3>
 				{% endif %}
-				
-
 			</div>
-			<!-- /.row -->
-
+			
 		</div>
-		<!-- /.col-lg-9 -->
-
 	</div>
-	<!-- /.row -->
-
 </div>
 
 {% endblock content %}
