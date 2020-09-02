@@ -28,11 +28,43 @@ def shop_home(request):
 def shop_item_details(request, pk):
     # get category lists
     categories = ProductCategory.objects.all()
+    
+    product = get_object_or_404(Product, id=pk)
 
     if request.method == "POST":
-        return render(request, 'shop/review_success.html')
 
-    product = get_object_or_404(Product, id=pk)
+        review_score = request.POST.get('review_score')
+        author_name = request.POST.get('author_name') or "Annonymous"
+        author_email = request.POST.get('author_email') or "null@null.com"
+        review_description = request.POST.get('review_description') or "N/A"
+        if not review_score:
+            title = 'Failed!'
+            message = "Please select a review score for submitting your review"
+            
+            context = {
+                "title": title,
+                "message": message,
+                "status": 'error'
+            }
+
+            return render(request, 'shop/review_success.html', context=context)
+
+        new_review = ProductReview(review_score=review_score,
+                                    review_description=review_description,
+                                    author_email=author_email,
+                                    author_name=author_name,
+                                    product=product)
+        new_review.save()
+
+        title = "Thanks for submitting your review"
+        message = "Your review for this product has been submitted, Thanks for submitting your valuable review"
+
+        context = {
+            "title": title,
+            "message": message,
+            "status": 'OK'
+        }
+        return render(request, 'shop/review_success.html', context=context)
 
     review_score= 0
     count = 0

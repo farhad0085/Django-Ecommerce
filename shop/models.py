@@ -21,7 +21,7 @@ class ProductReview(models.Model):
     author_name = models.CharField(max_length=30)
     author_email = models.EmailField()
     review_description = models.TextField(blank=True)
-    review_score = models.IntegerField()
+    review_score = models.IntegerField(default=0)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     
     def __str__(self):

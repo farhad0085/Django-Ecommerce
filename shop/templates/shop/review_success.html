@@ -1,6 +1,15 @@
 {% extends 'shop/base.html' %}
 {% block content %}
     <div class="container my-4">
-        <div class="alert alert-success">Thank you for submitting your review!</div>
+        {% if status == 'OK' %}
+        <div class="alert alert-success">{{ message }}
+            <a href="" style="float: right" class="btn btn-success btn-sm">Go Back</a>
+        </div>
+        {% else %}
+        <div class="alert alert-danger">{{ message }}
+            <a href="" style="float: right" class="btn btn-success btn-sm">Go Back</a>
+        </div>
+        {% endif %}
+        
     </div>
 {% endblock content %}
