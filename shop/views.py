@@ -58,3 +58,34 @@ def shop_item_details(request, pk):
         'categories': categories
     }
     return render(request, template_name='shop/shop_item_details.html', context=context)
+
+
+def shop_category(request, pk):
+    
+    # get category lists
+    categories = ProductCategory.objects.all()
+
+    category = ProductCategory.objects.get(id=pk)
+
+    products = Product.objects.filter(categories=category).all()
+
+    reviews_list = []
+    for product in products:
+        review_star = 0
+        count = 0
+        reviews = product.productreview_set.all()
+        for review in reviews:
+            review_star += review.review_score
+        if reviews.count() != 0:
+            review_star = review_star / reviews.count()
+        reviews_list.append(review_star)
+    product_review_dict = dict(zip(products, reviews_list))
+    
+    context = {
+        'products': products,
+        'product_review_dict': product_review_dict,
+        'categories': categories,
+        'current_category': category
+    }
+
+    return render(request, template_name="shop/shop_category.html", context=context)

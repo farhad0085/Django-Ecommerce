@@ -11,7 +11,7 @@
 				
 				<div class="list-group">
 					{% for category in categories %}
-						<a href="#" class="list-group-item list-group-item-action">{{ category.category_name }}</a>
+						<a href="{% url 'shop_category' category.id %}" class="list-group-item list-group-item-action">{{ category.category_name }}</a>
 					{% endfor %}
 				</div>
 			</div>
