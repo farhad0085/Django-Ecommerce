@@ -1,5 +1,4 @@
 {% extends 'shop/base.html' %}
-
 {% block content %}
 	
 	<!-- Page Content -->
@@ -71,7 +70,42 @@
 						{% else %}
 							<p>No reviews yet!</p>
 						{% endif %}
-						<a href="#" class="btn btn-success">Leave a Review</a>
+						<a href="#" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Leave a Review</a>
+
+						<!-- Modal -->
+						<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Leave a review</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								</div>
+								<form method="POST">
+										{% csrf_token %}
+									<div class="modal-body">
+										<div class="form-group">
+											<input type="text" placeholder="Your Name" class="form-control">
+										</div>
+										<div class="form-group">
+											<input type="text" placeholder="Email" class="form-control">
+										</div>
+										<div class="form-group">
+											<input type="text" placeholder="Your Name" class="form-control">
+										</div>
+										<div class="form-group">
+											<textarea placeholder="Enter review here" class="form-control"></textarea>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+										<input type="submit" class="btn btn-success" value="Submit">
+									</div>
+								</form>
+							</div>
+							</div>
+						</div>
 					</div>
 				</div>
 				<!-- /.card -->

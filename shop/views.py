@@ -29,6 +29,9 @@ def shop_item_details(request, pk):
     # get category lists
     categories = ProductCategory.objects.all()
 
+    if request.method == "POST":
+        return render(request, 'shop/review_success.html')
+
     product = get_object_or_404(Product, id=pk)
 
     review_score= 0
@@ -85,7 +88,8 @@ def shop_category(request, pk):
         'products': products,
         'product_review_dict': product_review_dict,
         'categories': categories,
-        'current_category': category
+        'current_category': category,
+        'title': category.category_name
     }
 
     return render(request, template_name="shop/shop_category.html", context=context)
