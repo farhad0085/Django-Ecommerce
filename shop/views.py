@@ -5,7 +5,7 @@ def shop_home(request):
     # get category lists
     categories = ProductCategory.objects.all()
 
-    products = Product.objects.all()
+    products = Product.objects.order_by('-id').all()
     reviews_list = []
     for product in products:
         review_star = 0
@@ -102,7 +102,7 @@ def shop_category(request, pk):
 
     category = ProductCategory.objects.get(id=pk)
 
-    products = Product.objects.filter(categories=category).all()
+    products = Product.objects.filter(categories=category).order_by('-id').all()
 
     reviews_list = []
     for product in products:

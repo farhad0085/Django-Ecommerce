@@ -22,7 +22,9 @@
 					<div class="card-body">
 						<h3 class="card-title">{{ product.product_name }}</h3>
 						<h4>{{ product.product_price }} Taka</h4>
-						<p class="card-text">{{ product.product_description }}</p>
+						{% autoescape on %}
+						<p class="card-text">{{ product.product_description|linebreaks }}</p>
+						{% endautoescape %}
 						<span class="text-warning" style="font-size: 20px">
 							{% if review_score == 0 or review_score < 1 %}
 								&#9734; &#9734; &#9734; &#9734; &#9734;
